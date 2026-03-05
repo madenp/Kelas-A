@@ -167,6 +167,12 @@ function App() {
             o => o.value.toLowerCase() === (status || '').toLowerCase()
         );
         if (opt) return <span className={`badge ${opt.badge}`}>{opt.icon} {opt.value}</span>;
+        if ((status || '').toLowerCase() === 'penilaian di tutup') {
+            return <span className="badge badge-danger">🔒 Penilaian Ditutup</span>;
+        }
+        if ((status || '').toLowerCase() === 'sudah di nilai') {
+            return <span className="badge badge-success">✅ Sudah Di Nilai</span>;
+        }
         return <span className="badge badge-info">{status || '—'}</span>;
     };
 
@@ -288,6 +294,22 @@ function App() {
                                 {activeTab !== 'dashboard' && (() => {
                                     const currentStatus = getStatusForTab(item, activeTab);
                                     const alreadySubmitted = currentStatus && currentStatus.toLowerCase() === statusVal;
+                                    const isClosed = currentStatus && currentStatus.toLowerCase() === 'penilaian di tutup';
+                                    const isGraded = currentStatus && currentStatus.toLowerCase() === 'sudah di nilai';
+                                    if (isClosed) {
+                                        return (
+                                            <span className="badge badge-danger" style={{ width: '100%', justifyContent: 'center', padding: '8px 12px' }}>
+                                                🔒 Penilaian Ditutup
+                                            </span>
+                                        );
+                                    }
+                                    if (isGraded) {
+                                        return (
+                                            <span className="badge badge-success" style={{ width: '100%', justifyContent: 'center', padding: '8px 12px' }}>
+                                                ✅ Sudah Di Nilai
+                                            </span>
+                                        );
+                                    }
                                     return !alreadySubmitted ? (
                                         <button
                                             className="btn btn-primary btn-sm"
@@ -323,7 +345,7 @@ function App() {
                 fontSize: '13px',
                 color: 'var(--text-muted)',
             }}>
-                © 2025 <a
+                © 2026 <a
                     href="https://instagram.com/madenp_"
                     target="_blank"
                     rel="noopener noreferrer"
